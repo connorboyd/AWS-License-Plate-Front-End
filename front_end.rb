@@ -2,6 +2,7 @@ require 'sinatra'
 require 'slim'
 require 'pry'
 require 'digest' # for hashing image
+require 'aws-sdk'
 
 get '/' do
   slim :index
@@ -15,3 +16,11 @@ post '/image' do
   # put image in S3, add job to SQS
 end
 
+
+def check_S3(image_hash)
+
+end
+
+def check_ElastiCache(image_hash)
+
+end
