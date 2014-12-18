@@ -4,6 +4,8 @@ require 'pry'
 require 'digest' # for hashing image
 require 'aws-sdk'
 
+set :bind, '0.0.0.0'
+
 get '/' do
   slim :index
 end
