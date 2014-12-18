@@ -11,7 +11,10 @@ AWS.config(
   :access_key_id => '',
   :secret_access_key => '')
 
-s3 = AWS::S3.new
+s3  = AWS::S3.new
+sqs = AWS::SQS.new
+
+queue = sqs.queues.create("alpr-work-queue")
 
 get '/' do
   slim :index
@@ -22,8 +25,8 @@ post '/image' do
   image_hash = Digest::SHA1.file tempfile
   key = image_hash
   s3.buckets[bucket_name].objects[key].write(file: tempfile)
+  queue.send_message(image_hash.to_s)
   # Check if results are in ElastiCache
-  # put image in S3, add job to SQS
 end
 
 def check_ElastiCache(image_hash)
